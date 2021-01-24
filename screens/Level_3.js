@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
+import CountDown from 'react-native-countdown-component';
 
 export class Level_3 extends Component {
     static navigationOptions = {
@@ -28,8 +29,9 @@ export class Level_3 extends Component {
 
             warningMessage: '',
             guessesCount: 0,
-            wrongGuesses: 0
+            wrongGuesses: 0,
 
+            time: 90
         }
     }
 
@@ -57,8 +59,12 @@ export class Level_3 extends Component {
 
             warningMessage: '',
             guessesCount: 0,
-            wrongGuesses: 0
+            wrongGuesses: 0,
 
+
+            time: this.state.time + 1
+        }, () => {
+            this.setState({ time: this.state.time - 1 })
         });
     }
 
@@ -72,9 +78,8 @@ export class Level_3 extends Component {
     }
 
     inputHandler = text => {
-        this.setState({
-            guessesCount: this.state.guessesCount + 1
-        });
+        this.setState({ guessesCount: this.state.guessesCount + 1 });
+
         text = text.toLowerCase();
         var indexes = this.getIndexes(this.state.word, text);
 
@@ -88,7 +93,7 @@ export class Level_3 extends Component {
                     warningMessage: 'Letter Not Matched!',
                     wrongLetters: wrongLettersTemp,
                     wrongGuesses: this.state.wrongGuesses + 1
-                }, () => console.log(this.state.wrongLetters));
+                });
             }
         } else {
             this.state.correctLetters.push(text);
@@ -140,13 +145,41 @@ export class Level_3 extends Component {
         }
     }
 
+    timeOver = () => {
+        if (this.state.firstBoxVal != '' && this.state.secondBoxVal != '' && this.state.thirdBoxVal != '') { }
+        else {
+            Alert.alert(
+                "You Lost!",
+                "Time Over!",
+                [
+                    { text: "Play Again", onPress: () => this.startGame() },
+                    { text: "Next Level", onPress: () => this.props.navigation.navigate('Level_2') }
+                ],
+                { cancelable: false }
+            );
+        }
+    }
+
     render() {
         return (
             <View style={Styles.container}>
-                {/* Game Area - Where the word guesses would pop up */}
                 <View style={Styles.gameAreaContainer}>
                     <View style={Styles.gameAreaTextContainer}>
                         <Text style={Styles.gameAreaText}>Guess The Word!</Text>
+                    </View>
+                    <View>
+                        <CountDown
+                            size={20}
+                            until={this.state.time}
+                            onFinish={this.timeOver}
+                            digitStyle={{ borderWidth: 0 }}
+                            digitTxtStyle={{ color: 'black' }}
+                            timeLabelStyle={{ color: 'red', fontWeight: 'bold' }}
+                            separatorStyle={{ color: 'black' }}
+                            timeToShow={['M', 'S']}
+                            timeLabels={{ m: null, s: null }}
+                            showSeparator
+                        />
                     </View>
                     <View style={Styles.wordsContainer}>
                         <View style={Styles.wordWrapper}>
