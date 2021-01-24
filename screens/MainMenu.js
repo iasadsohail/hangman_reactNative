@@ -8,7 +8,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 const image = {
-    uri: "https://wallpaperaccess.com/full/729333.jpg",
+    //uri: "https://wallpaperaccess.com/full/729333.jpg",
+    uri: "./assets/bimage.jpg",
 };
 class MainMenu extends Component {
     static navigationOptions = {
@@ -17,7 +18,7 @@ class MainMenu extends Component {
     render() {
         return (
             <View style={Styles.container}>
-                <ImageBackground source={image} style={Styles.image}>
+                <ImageBackground source={require('../assets/bimage.jpg')} style={Styles.image}>
                     <Text style={Styles.heading}>HANGMAN</Text>
                     <Text style={Styles.text}>Start</Text>
                     <TouchableOpacity
