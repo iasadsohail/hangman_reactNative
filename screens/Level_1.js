@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native'
 
-export class GameScreen extends Component {
+export class Level_1 extends Component {
     static navigationOptions = {
         header: false
     }
@@ -10,7 +10,11 @@ export class GameScreen extends Component {
         this.state = {
             inputLetter: '',
             word: '',
-            wordList: ["hello", "tello", "bello", "aello", "cello", "eello", "dello"],
+            wordList: [
+                'mug', 'air', 'pit', 'fun', 'oil', 'oak', 'fox', 'few', 'fog', 'age', 'use', 'sow', 'pen', 'fit', 'car', 'cap',
+                'fan', 'flu', 'row', 'nun', 'jaw', 'spy', 'bow', 'pop', 'act', 'rub', 'fix', 'dip', 'rob', 'cup', 'mud', 'jet',
+                'cut', 'try', 'bar', 'bin', 'gas', 'pot', 'hit', 'cat', 'ask', 'ear', 'win', 'bus', 'lay', 'due', 'beg', 'gun'
+            ],
 
             correctLetters: [],
             wrongLetters: [],
@@ -18,8 +22,6 @@ export class GameScreen extends Component {
             firstBoxVal: '',
             secondBoxVal: '',
             thirdBoxVal: '',
-            fourthBoxVal: '',
-            fifthBoxVal: '',
 
             warningMessage: '',
             guessesCount: 0,
@@ -47,8 +49,6 @@ export class GameScreen extends Component {
             firstBoxVal: '',
             secondBoxVal: '',
             thirdBoxVal: '',
-            fourthBoxVal: '',
-            fifthBoxVal: '',
 
             warningMessage: '',
             guessesCount: 0,
@@ -88,7 +88,7 @@ export class GameScreen extends Component {
         } else {
             this.state.correctLetters.push(text);
             indexes.forEach(element => {
-                var letterToBeShown = this.state.word[element];
+                var letterToBeShown = this.state.word[element].toUpperCase();
                 this.setState({
                     warningMessage: ''
                 });
@@ -105,14 +105,6 @@ export class GameScreen extends Component {
                         if (this.state.thirdBoxVal != '') this.setState({ warningMessage: 'Letter Already Present!' });
                         else this.setState({ thirdBoxVal: letterToBeShown }, () => this.checkCompletion());
                         break;
-                    case 3:
-                        if (this.state.fourthBoxVal != '') this.setState({ warningMessage: 'Letter Already Present!' });
-                        else this.setState({ fourthBoxVal: letterToBeShown }, () => this.checkCompletion());
-                        break;
-                    case 4:
-                        if (this.state.fifthBoxVal != '') this.setState({ warningMessage: 'Letter Already Present!' });
-                        else this.setState({ fifthBoxVal: letterToBeShown }, () => this.checkCompletion());
-                        break;
                 }
             });
         }
@@ -122,30 +114,17 @@ export class GameScreen extends Component {
     }
 
     checkCompletion = () => {
-        if (this.state.firstBoxVal != '' && this.state.secondBoxVal != '' && this.state.thirdBoxVal != '' && this.state.fourthBoxVal != '' && this.state.fifthBoxVal != '') {
+        if (this.state.firstBoxVal != '' && this.state.secondBoxVal != '' && this.state.thirdBoxVal != '') {
             Alert.alert(
                 "You Won!",
                 "The Word Was: " + this.state.word + "\nTotal Guesses: " + this.state.guessesCount + "\nWrong Guesses: " + this.state.wrongGuesses,
                 [
-                    { text: "Start Over", onPress: () => this.startGame() },
+                    { text: "Play Again", onPress: () => this.startGame() },
+                    { text: "Next Level", onPress: () => this.props.navigation.navigate('Level_2') }
                 ],
                 { cancelable: false }
             );
         }
-    }
-
-    endGame = () => {
-        //set all the state variables to default
-        this.setState({
-            firstBoxVal: '',
-            secondBoxVal: '',
-            thirdBoxVal: '',
-            fourthBoxVal: '',
-            fifthBoxVal: '',
-            warningMessage: '',
-            guessesCount: 0,
-            wrongGuesses: 0
-        }, () => this.startGame());
     }
 
     render() {
@@ -165,12 +144,6 @@ export class GameScreen extends Component {
                         </View>
                         <View style={Styles.wordWrapper}>
                             <Text style={Styles.letterViewArea}>{this.state.thirdBoxVal}</Text>
-                        </View>
-                        <View style={Styles.wordWrapper}>
-                            <Text style={Styles.letterViewArea}>{this.state.fourthBoxVal}</Text>
-                        </View>
-                        <View style={Styles.wordWrapper}>
-                            <Text style={Styles.letterViewArea}>{this.state.fifthBoxVal}</Text>
                         </View>
                     </View>
                     <Text style={Styles.wrongLetters}>
@@ -284,4 +257,4 @@ const Styles = StyleSheet.create({
     }
 });
 
-export default GameScreen
+export default Level_1

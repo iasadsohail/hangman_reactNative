@@ -22,7 +22,7 @@ class MainMenu extends Component {
                     <Text style={Styles.heading}>HANGMAN</Text>
                     <Text style={Styles.text}>Start</Text>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('GameScreen')}>
+                        onPress={() => this.props.navigation.navigate('LevelSelection')}>
                         <Ionicons
                             name="play-circle-outline"
                             size={100}

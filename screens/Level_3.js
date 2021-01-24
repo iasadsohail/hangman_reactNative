@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native'
 
-export class GameScreen extends Component {
+export class Level_3 extends Component {
     static navigationOptions = {
         header: false
     }
@@ -10,7 +10,12 @@ export class GameScreen extends Component {
         this.state = {
             inputLetter: '',
             word: '',
-            wordList: ["hello", "tello", "bello", "aello", "cello", "eello", "dello"],
+            wordList: [
+                'refer', 'budge', 'berry', 'thick', 'metal', 'steel', 'total', 'range', 'wagon', 'widen', 'brush', 'stain', 'rifle',
+                'dozen', 'mouth', 'agile', 'great', 'south', 'sheet', 'creed', 'taste', 'proof', 'deter', 'tooth', 'kneel', 'wheel',
+                'green', 'bless', 'wrist', 'minor', 'smell', 'alive', 'drown', 'quest', 'tasty', 'utter', 'short', 'amber', 'outer',
+                'groan', 'bland', 'block', 'alarm', 'state', 'spare', 'light', 'ranch', 'train', 'count'
+            ],
 
             correctLetters: [],
             wrongLetters: [],
@@ -88,7 +93,7 @@ export class GameScreen extends Component {
         } else {
             this.state.correctLetters.push(text);
             indexes.forEach(element => {
-                var letterToBeShown = this.state.word[element];
+                var letterToBeShown = this.state.word[element].toUpperCase();
                 this.setState({
                     warningMessage: ''
                 });
@@ -127,25 +132,12 @@ export class GameScreen extends Component {
                 "You Won!",
                 "The Word Was: " + this.state.word + "\nTotal Guesses: " + this.state.guessesCount + "\nWrong Guesses: " + this.state.wrongGuesses,
                 [
-                    { text: "Start Over", onPress: () => this.startGame() },
+                    { text: "Play Again", onPress: () => this.startGame() },
+                    { text: "Next Level", onPress: () => this.props.navigation.navigate('Level_4') }
                 ],
                 { cancelable: false }
             );
         }
-    }
-
-    endGame = () => {
-        //set all the state variables to default
-        this.setState({
-            firstBoxVal: '',
-            secondBoxVal: '',
-            thirdBoxVal: '',
-            fourthBoxVal: '',
-            fifthBoxVal: '',
-            warningMessage: '',
-            guessesCount: 0,
-            wrongGuesses: 0
-        }, () => this.startGame());
     }
 
     render() {
@@ -284,4 +276,4 @@ const Styles = StyleSheet.create({
     }
 });
 
-export default GameScreen
+export default Level_3
